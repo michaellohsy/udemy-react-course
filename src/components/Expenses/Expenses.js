@@ -5,12 +5,19 @@ import ExpensesFilter from "./ExpensesFilter";
 import "./Expenses.css";
 import React from "react";
 
+const DEFAULT_YEAR = 2019;
+
 function Expenses(props) {
-  const [selectedYear, setSelectedYear] = useState("2019");
-  const expenses = props.expenses;
+  const getFilteredExpenses = (year) => {
+    return props.expenses.filter((e) => +e.date.getFullYear() === +year);
+  };
+
+  const [selectedYear, setSelectedYear] = useState(DEFAULT_YEAR);
+  const [expenses, setExpenses] = useState(getFilteredExpenses(selectedYear));
 
   const onYearChange = (year) => {
     setSelectedYear(year);
+    setExpenses(getFilteredExpenses(year));
   };
 
   return (
